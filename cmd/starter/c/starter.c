@@ -119,8 +119,8 @@ static int fork_ns(unsigned int flags) {
 
 static void priv_escalate(void) {
     singularity_message(VERBOSE, "Get root privileges\n");
-    if ( seteuid(0) < 0 ) {
-        singularity_message(ERROR, "Failed to set effective UID to 0\n");
+    if ( seteuid(0) != 0 ) {
+        singularity_message(ERROR, "Failed to set effective UID to 0: %s\n", strerror(errno));
         exit(1);
     }
 }
